@@ -145,12 +145,14 @@ function MovieList({ movies }) {
   );
 }
 MovieList.propTypes = {
-  movies: PropTypes.array({
-    Poster: PropTypes.string,
-    Title: PropTypes.string,
-    Year: PropTypes.string,
-    imdbID: PropTypes.string,
-  }),
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      Poster: PropTypes.string,
+      Title: PropTypes.string,
+      Year: PropTypes.string,
+      imdbID: PropTypes.string,
+    })
+  ),
 };
 function Movie({ movie }) {
   return (
