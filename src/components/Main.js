@@ -4,5 +4,8 @@ export default function Main({ children }) {
   return <main className="main">{children}</main>;
 }
 Main.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]).isRequired,
 };

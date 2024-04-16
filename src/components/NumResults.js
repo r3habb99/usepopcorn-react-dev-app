@@ -8,5 +8,5 @@ export default function NumResults({ movies }) {
   );
 }
 NumResults.propTypes = {
-  movies: PropTypes.func,
+  movies: PropTypes.array.isRequired,
 };

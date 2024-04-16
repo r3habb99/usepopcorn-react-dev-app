@@ -10,5 +10,8 @@ export default function NavBar({ children }) {
   );
 }
 NavBar.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]).isRequired,
 };
