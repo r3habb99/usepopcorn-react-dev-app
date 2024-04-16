@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { KEY } from "../globalConfig/movieApi-key";
 import StarRating from "./StarRating";
 import Loader from "./Loader";
@@ -175,3 +176,9 @@ export default function MovieDetails({
     </div>
   );
 }
+MovieDetails.propTypes = {
+  selectedId: PropTypes.string.isRequired,
+  onCloseMovie: PropTypes.func.isRequired,
+  onAddWatched: PropTypes.func.isRequired,
+  watched: PropTypes.array.isRequired,
+};

@@ -13,5 +13,8 @@ export default function Box({ children }) {
   );
 }
 Box.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]).isRequired,
 };
