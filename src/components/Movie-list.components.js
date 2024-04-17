@@ -18,7 +18,9 @@ MovieList.propTypes = {
       imdbID: PropTypes.string,
     })
   ),
+  onSelectMovie: PropTypes.func.isRequired,
 };
+
 function Movie({ movie, onSelectMovie }) {
   return (
     <li onClick={() => onSelectMovie(movie.imdbID)}>
@@ -40,4 +42,5 @@ Movie.propTypes = {
     Year: PropTypes.string,
     imdbID: PropTypes.string,
   }),
+  onSelectMovie: PropTypes.func.isRequired,
 };

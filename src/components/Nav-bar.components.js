@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Logo from "./Logo";
+import Logo from "./Logo.components";
 
 export default function NavBar({ children }) {
   return (

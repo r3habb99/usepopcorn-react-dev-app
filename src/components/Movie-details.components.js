@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { KEY } from "../globalConfig/movieApi-key";
-import StarRating from "./StarRating";
-import Loader from "./Loader";
+import StarRating from "./Star-rating.components";
+import Loader from "./Loader.components";
+
+//Custom hook Import
+import { useKey } from "../hooks/useKey.hooks";
 
 export default function MovieDetails({
   selectedId,
@@ -55,21 +58,8 @@ export default function MovieDetails({
     onAddWatched(newWatchedMovie);
     onCloseMovie();
   }
-  useEffect(
-    function () {
-      function callback(e) {
-        if (e.code === "Escape") {
-          onCloseMovie();
-        }
-      }
-      document.addEventListener("keydown", callback);
-      return function () {
-        document.removeEventListener("keydown", callback);
-      };
-    },
-    [onCloseMovie]
-  );
 
+  useKey("Escape", onCloseMovie);
   useEffect(
     function () {
       async function getMovieDetails() {
