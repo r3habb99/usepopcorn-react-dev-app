@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import WatchedMovie from "./WatchedMovie";
+import WatchedMovie from "./Watched-movie.components";
 
 export default function WatchedMovieList({ watched, onDeleteWatched }) {
   return (
