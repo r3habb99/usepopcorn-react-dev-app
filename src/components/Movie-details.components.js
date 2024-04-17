@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
-import { KEY } from "../globalConfig/movieApi-key";
 import StarRating from "./Star-rating.components";
 import Loader from "./Loader.components";
 
 //Custom hook Import
 import { useKey } from "../hooks/useKey.hooks";
+import { useUserRatingCount } from "../hooks/useUserRating-Count.hooks";
+import { useMovieDetails } from "../hooks/useMovieDetails.hooks";
 
 export default function MovieDetails({
   selectedId,
@@ -13,19 +14,9 @@ export default function MovieDetails({
   onAddWatched,
   watched,
 }) {
-  const [movie, setMovie] = useState({});
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [userRating, setUserRating] = useState("");
-
-  const countRef = useRef(0);
-
-  useEffect(
-    function () {
-      if (userRating) countRef.current++;
-    },
-    [userRating]
-  );
+  //Custom Hooks
+  const { userRating, setUserRating, countRef } = useUserRatingCount();
+  const { movie, isLoading, error } = useMovieDetails(selectedId);
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(
@@ -60,33 +51,6 @@ export default function MovieDetails({
   }
 
   useKey("Escape", onCloseMovie);
-  useEffect(
-    function () {
-      async function getMovieDetails() {
-        try {
-          setIsLoading(true);
-          const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
-          );
-          if (!res.ok) {
-            throw new Error("Incorrect IMDb ID.");
-          }
-          const data = await res.json();
-          setMovie(data);
-          setIsLoading(false);
-        } catch (err) {
-          setError(err.message);
-        }
-      }
-      if (selectedId) {
-        getMovieDetails();
-      } else {
-        setMovie(null);
-        setError(null);
-      }
-    },
-    [selectedId]
-  );
   useEffect(
     function () {
       if (!title) return;
