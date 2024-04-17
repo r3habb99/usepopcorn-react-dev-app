@@ -11,16 +11,6 @@ const starContainerStyle = {
   display: "flex",
 };
 
-StarRating.propTypes = {
-  maxRating: PropTypes.number,
-  color: PropTypes.string,
-  size: PropTypes.number,
-  defaultRating: PropTypes.number,
-  messages: PropTypes.array,
-  className: PropTypes.string,
-  onSetRating: PropTypes.func,
-};
-
 export default function StarRating({
   maxRating = 5,
   color = "#fcc419",
@@ -60,13 +50,27 @@ export default function StarRating({
         ))}
       </div>
       <p style={textStyle}>
-        {messages.length === maxRating
-          ? messages[tempRating ? tempRating - 1 : rating - 1]
-          : tempRating || rating || ""}
+        {(() => {
+          if (messages.length === maxRating) {
+            return messages[tempRating ? tempRating - 1 : rating - 1];
+          } else {
+            return tempRating || rating || "";
+          }
+        })()}
       </p>
     </div>
   );
 }
+
+StarRating.propTypes = {
+  maxRating: PropTypes.number,
+  color: PropTypes.string,
+  size: PropTypes.number,
+  defaultRating: PropTypes.number,
+  messages: PropTypes.array,
+  className: PropTypes.string,
+  onSetRating: PropTypes.func,
+};
 
 function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
   const starStyle = {
@@ -78,10 +82,16 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
   return (
     <span
       role="button"
+      tabIndex={0}
       style={starStyle}
       onClick={onRate}
       onMouseEnter={onHoverIn}
       onMouseLeave={onHoverOut}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          onRate();
+        }
+      }}
     >
       {full ? (
         <svg
@@ -110,15 +120,11 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
     </span>
   );
 }
-
-/*
-FULL STAR
-
-
-
-
-EMPTY STAR
-
-
-
-*/
+Star.propTypes = {
+  onRate: PropTypes.func.isRequired,
+  full: PropTypes.bool.isRequired,
+  onHoverIn: PropTypes.func.isRequired,
+  onHoverOut: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
+  size: PropTypes.number.isRequired,
+};
